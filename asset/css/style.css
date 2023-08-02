@@ -1,0 +1,362 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  /* Chrome, Safari, Edge, Opera */
+  /* Firefox */
+}
+* input::-webkit-outer-spin-button, .person-input-form .select-field select::-webkit-outer-spin-button,
+* input::-webkit-inner-spin-button,
+.person-input-form .select-field select::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+* input[type=number], .person-input-form .select-field select[type=number] {
+  -moz-appearance: textfield;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+.btn {
+  border-radius: 1.25rem;
+}
+
+.btn-warning {
+  background-color: #ffab2d;
+  border-color: #ffab2d;
+  color: #212529;
+}
+.btn-warning:hover, .btn-warning:focus {
+  background-color: #ff9c07;
+  border-color: #f99500;
+  color: #212529;
+}
+
+.btn-danger {
+  background-color: #ff4c41;
+  border-color: #ff4c41;
+  color: #fff;
+}
+.btn-danger:hover, .btn-danger:focus {
+  background-color: #ff281b;
+  border-color: #ff1c0e;
+  color: #fff;
+}
+
+.btn-info {
+  background-color: #009ff9;
+  border-color: #0097ec;
+  color: #fff;
+}
+.btn-info:hover, .btn-info:focus {
+  background-color: #07a5ff;
+  border-color: #009ff9;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #2953e8;
+  border-color: #2953e8;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #1740d4;
+  border-color: #163dc8;
+  color: #fff;
+}
+
+.table .thead-dark th {
+  border-bottom-width: 1px;
+  border-color: #f0f1f5;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 20px;
+}
+
+.modal-content {
+  background-color: #f4f4f4;
+}
+.modal-content .modal-body .container {
+  border-radius: 1rem;
+}
+.modal-content .form-control {
+  border: 1px solid transparent;
+  border-radius: 1.5rem;
+}
+.modal-content .input-group-text {
+  width: 38px;
+}
+
+.header-nav {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.header-nav .navbar {
+  padding: 0.5rem 3rem;
+  width: 100%;
+}
+.header-nav .nav-logo i {
+  color: #2953e8;
+  font-size: 35px;
+  margin-right: 10px;
+}
+.header-nav .nav-logo a {
+  align-items: center;
+  font-weight: bold;
+  letter-spacing: 4px;
+  vertical-align: bottom;
+  transition: all 0.5s;
+}
+.header-nav .nav-logo a:hover {
+  color: #2953e8;
+  text-shadow: 2px 1px 4px beige;
+}
+.header-nav .nav-logo a p:nth-of-type(2) {
+  font-size: 16px;
+}
+.header-nav .container {
+  max-width: 1240px;
+}
+.header-nav .container .admin-profile {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #eee;
+  padding-left: 30px;
+  color: #eee;
+  transition: all 0.5s ease;
+}
+.header-nav .container .admin-profile:hover {
+  text-decoration: none;
+}
+.header-nav .container .admin-profile img {
+  height: 39px;
+  width: 39px;
+  border-radius: 100%;
+}
+.header-nav .container .admin-profile .admin-info {
+  padding-left: 15px;
+  text-align: left;
+}
+.header-nav .container .dropdown-menu i {
+  margin-right: 5px;
+}
+.header-nav .container .dropdown-menu .logout i {
+  color: red;
+}
+.header-nav .container .dropdown-menu .profile i {
+  color: #1740d4;
+}
+
+@media screen and (max-width: 576px) {
+  .header-nav .nav-logo .navbar-brand {
+    font-size: 1rem;
+  }
+  .header-nav .nav-logo i {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .header-nav .nav-logo .navbar-brand {
+    font-size: 14px;
+  }
+  .header-nav .nav-logo i {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 322px) {
+  .header-nav .nav-logo .navbar-brand {
+    font-size: 12px;
+  }
+  .header-nav .nav-logo i {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .header-nav .navbar-toggler {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .header-nav .navbar-toggler {
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 322px) {
+  .header-nav .navbar-toggler {
+    font-size: 8px;
+  }
+}
+
+.person-list {
+  background-color: #f4f4f4;
+}
+.person-list .person-list-header {
+  justify-content: space-between;
+  align-items: center;
+}
+.person-list .person-list-header h2 {
+  margin: 0;
+}
+.person-list .table-person table {
+  overflow: hidden;
+  display: table;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  background-color: white;
+  box-shadow: 0 12px 23px 0 rgba(62, 73, 84, 0.2);
+}
+.person-list .sort-and-filter .custom-select {
+  border-radius: 60px;
+  border-width: 1px;
+  min-height: 40px;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+}
+.person-list .sort-and-filter .custom-select:focus {
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+
+.person-input-form .input-field, .person-input-form .select-field {
+  width: 100%;
+  padding-bottom: 20px;
+}
+.person-input-form .input-field label, .person-input-form .select-field label {
+  font-weight: bold;
+  color: #1a1919;
+  margin-bottom: 10px;
+}
+.person-input-form .input-field label i, .person-input-form .select-field label i {
+  margin-right: 10px;
+}
+.person-input-form .input-field input, .person-input-form .select-field input, .person-input-form .select-field select {
+  width: 100%;
+  color: #353535;
+  background-color: transparent;
+  border: 0;
+  border-bottom: solid 3px rgba(41, 82, 232, 0.301);
+  padding: 1px 2px;
+  transition: all 0.4s ease;
+}
+.person-input-form .input-field input:focus + span::after, .person-input-form .select-field input:focus + span::after, .person-input-form .select-field select:focus + span::after {
+  width: 100%;
+}
+.person-input-form .input-field span, .person-input-form .select-field span {
+  position: relative;
+  display: block;
+}
+.person-input-form .input-field span::after, .person-input-form .select-field span::after {
+  content: "";
+  background-color: #2953e8;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0%;
+  transition: all 0.4s ease;
+}
+.person-input-form .input-field .error-announce, .person-input-form .select-field .error-announce {
+  color: red;
+  margin-left: 2px;
+  display: none;
+}
+.person-input-form .student-type,
+.person-input-form .employee-type,
+.person-input-form .customer-type {
+  display: none;
+}
+
+#tbdList button {
+  margin: auto;
+}
+
+#confirmation .modal-content {
+  border-radius: 1.5rem;
+}
+
+@media screen and (max-width: 992px) {
+  .person-list h2 {
+    font-size: 1.75rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .person-list h2 {
+    font-size: 1.5rem;
+  }
+  .person-list #btnAdd {
+    font-size: 15px;
+  }
+  .person-list .custom-select {
+    font-size: 12.5px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .person-list #btnAdd {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 575.98px) {
+  .person-list .modal-dialog {
+    max-width: 400px;
+    margin: 1.5rem auto;
+  }
+}
+@media screen and (max-width: 500px) {
+  .person-list .modal-dialog {
+    max-width: 350px;
+    font-size: 0.9rem;
+  }
+  .person-list .modal-dialog .modal-title {
+    font-size: 1.4rem;
+  }
+  .person-list .modal-dialog .modal-footer button {
+    font-size: 0.9rem;
+  }
+}
+@media screen and (max-width: 420px) {
+  .person-list input, .person-list .person-input-form .select-field select, .person-input-form .select-field .person-list select {
+    font-size: 9.5px;
+  }
+  .person-list .custom-select {
+    font-size: 9.5px;
+  }
+  .person-list .modal-dialog {
+    max-width: 300px;
+    margin: 1rem auto;
+  }
+  .person-list .modal-dialog .modal-title {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (max-width: 350px) {
+  .person-list .col-6 {
+    display: none;
+  }
+  .person-list .col-6 {
+    text-align: revert !important;
+  }
+  .person-list .modal-dialog {
+    max-width: 270px;
+    font-size: 0.8rem;
+  }
+  .person-list .modal-dialog .modal-title {
+    font-size: 1.1rem;
+  }
+  .person-list .modal-dialog .modal-footer button {
+    font-size: 0.8rem;
+  }
+}
+@media screen and (max-width: 322px) {
+  .person-list h2 {
+    font-size: 1rem;
+  }
+  .person-list .custom-select {
+    font-size: 9.5px;
+  }
+}/*# sourceMappingURL=style.css.map */

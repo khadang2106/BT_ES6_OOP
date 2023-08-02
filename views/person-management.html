@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Person Management</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- Fonts AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Font GG -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../asset/css/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header-nav admin-header">
+      <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container">
+          <!-- Brand -->
+          <div class="nav-logo">
+            <a class="navbar-brand d-flex" href="#">
+              <i class="fa fa-book-open"></i>
+              <div class="academy-name">
+                <p>ART</p>
+                <p>Academy of Research and Tuition</p>
+              </div>
+            </a>
+          </div>
+          <!-- Dropdown -->
+          <div class="dropdown ml-sm-4 ml-1">
+            <a
+              href=""
+              class="admin-profile"
+              role="button"
+              data-toggle="dropdown"
+            >
+              <img
+                src="https://vora.dexignlab.com/react/demo/static/media/17.a7b6b9cb820bffd162bf.jpg"
+              />
+              <div class="admin-info">Welcome <span id="fullName"></span></div>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item profile" href="#"
+                ><i class="fa-solid fa-user"></i>Profile</a
+              >
+              <a class="dropdown-item logout" href="#"
+                ><i class="fa-solid fa-arrow-right-from-bracket"></i>Log Out</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Person List -->
+    <section class="person-list p-3">
+      <div class="container">
+        <div
+          class="person-list-header d-lg-flex d-block mb-2 mb-md-3 pb-3 pb-sm-2 border-bottom"
+        >
+          <h2>Person List</h2>
+          <div class="mt-2 ml-0 ml-sm-2 m-lg-0">
+            <button
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#addingModal"
+              id="btnAdd"
+            >
+              <i class="fa fa-plus"></i>
+              Add
+            </button>
+          </div>
+        </div>
+
+        <!-- Sort and Filter bar -->
+        <div class="sort-and-filter">
+          <div class="row mb-2">
+            <div class="col-6">
+              <label for="selcSort">Sort:</label>
+              <select class="custom-select w-50" id="selcSort">
+                <option selected>Default</option>
+                <option value="">Name: From A to Z</option>
+                <option value="">Name: From Z to A</option>
+              </select>
+            </div>
+            <div class="col-6 text-right">
+              <label for="selcFilter">Filter:</label>
+              <select class="custom-select w-50" id="selcFilter">
+                <option selected>Default</option>
+                <option value="student">Student</option>
+                <option value="employee">Employee</option>
+                <option value="customer">Customer</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane container active" id="student">
+            <div class="table-person" id="tablePerson">
+              <table class="table table-bordered table-responsive table-hover">
+                <thead class="thead-dark">
+                  <tr class="text-center">
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="tbdList"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane container fade" id="tablet"></div>
+          <div class="tab-pane container fade" id="laptop"></div>
+        </div>
+      </div>
+
+      <!-- Person Input Form -->
+      <div class="modal fade" id="addingModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title mx-auto">Person Management</h4>
+              <!-- <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button> -->
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="container person-input-form">
+                <div class="select-field">
+                  <label><i class="fa-solid fa-bars"></i>Type</label>
+                  <select id="selcType">
+                    <option value="default">Select user's type</option>
+                    <option value="student">Student</option>
+                    <option value="employee">Employee</option>
+                    <option value="customer">Customer</option>
+                  </select>
+                  <span></span>
+                  <span class="error-announce" id="errorSelc"></span>
+                </div>
+                <div class="input-field">
+                  <label><i class="fa fa-id-card"></i>ID</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="userId"
+                    placeholder="User's ID"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorPersonId"></span>
+                </div>
+                <div class="input-field">
+                  <label><i class="fa fa-user"></i>Full Name</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="userFullName"
+                    placeholder="User's Full Name"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorName"></span>
+                </div>
+                <div class="input-field">
+                  <label><i class="fa fa-envelope"></i>Email</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="userEmail"
+                    placeholder="User's Email"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorEmail"></span>
+                </div>
+                <div class="input-field">
+                  <label><i class="fa fa-home"></i>Address</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="userAddress"
+                    placeholder="User's Address"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorAddress"></span>
+                </div>
+                <div class="input-field student-type">
+                  <label><i class="fa fa-calculator"></i>Math Grade</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="mathGrade"
+                    placeholder="Student's Math Grade"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorMath"></span>
+                </div>
+                <div class="input-field student-type">
+                  <label><i class="fa fa-atom"></i>Physics Grade</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="physicsGrade"
+                    placeholder="Student's Physics Grade"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorPhysics"></span>
+                </div>
+                <div class="input-field student-type">
+                  <label><i class="fa fa-flask"></i>Chemical Grade</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="chemicalGrade"
+                    placeholder="Student's Chemical Grade"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorChemical"></span>
+                </div>
+                <div class="input-field employee-type">
+                  <label
+                    ><i class="fa-solid fa-business-time"></i>Work Day</label
+                  >
+                  <input
+                    required=""
+                    type="text"
+                    id="workDay"
+                    placeholder="Employee's Work Day"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorWorkDay"></span>
+                </div>
+                <div class="input-field employee-type">
+                  <label><i class="fa-solid fa-coins"></i>Daily Wage</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="dailyWage"
+                    placeholder="Employee's Daily Wage"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorDailyWage"></span>
+                </div>
+                <div class="input-field customer-type">
+                  <label
+                    ><i class="fa-solid fa-building"></i>Company's Name</label
+                  >
+                  <input
+                    required=""
+                    type="text"
+                    id="companyName"
+                    placeholder="Customer's Company Name"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorCompanyName"></span>
+                </div>
+                <div class="input-field customer-type">
+                  <label
+                    ><i class="fa-solid fa-money-check-dollar"></i>Bill</label
+                  >
+                  <input
+                    required=""
+                    type="text"
+                    id="bill"
+                    placeholder="Customer's Bill"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorBill"></span>
+                </div>
+                <div class="input-field customer-type">
+                  <label><i class="fa-solid fa-comment"></i>Review</label>
+                  <input
+                    required=""
+                    type="text"
+                    id="review"
+                    placeholder="Customer's Review"
+                  />
+                  <span></span>
+                  <span class="error-announce" id="errorReview"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <div class="modal-footer-btn"></div>
+              <button
+                type="button"
+                class="btn btn-danger fn-btn"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- My JS -->
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="../controllers/person-management.js"></script>
+  </body>
+</html>
