@@ -263,7 +263,8 @@ p {
 }
 .person-input-form .input-field .error-announce, .person-input-form .select-field .error-announce {
   color: red;
-  margin-left: 2px;
+  font-size: 0.9rem;
+  margin: 5px 0 5px 0;
   display: none;
 }
 .person-input-form .student-type,
