@@ -13,15 +13,14 @@ export class Student extends Person {
   ) {
     super(fullName, address, id, email, type);
 
-    this.mathGrade = mathGrade;
-    this.physicsGrade = physicsGrade;
-    this.chemGrade = chemGrade;
+    this.mathGrade = mathGrade * 1;
+    this.physicsGrade = physicsGrade * 1;
+    this.chemGrade = chemGrade * 1;
+    this.averageGrade = 0;
   }
 
   getAverGrade() {
-    const averageGrade =
+    this.averageGrade =
       (this.mathGrade + this.physicsGrade + this.chemGrade) / 3;
-
-    return averageGrade;
   }
 }

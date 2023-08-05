@@ -5,7 +5,7 @@ export class Customer extends Person {
     super(fullName, address, id, email, type);
 
     this.companyName = companyName;
-    this.bill = bill;
+    this.bill = bill * 1;
     this.review = review;
   }
 }

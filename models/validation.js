@@ -1,10 +1,10 @@
 export class Validation {
-  checkSelc = (selcID, errorID, mess) => {
+  checkSelc = (selcID, errorId, mess) => {
     if (domId(selcID).selectedIndex !== 0) {
-      hideError(errorID);
+      hideError(errorId);
       return true;
     }
-    showError(errorID, mess);
+    showError(errorId, mess);
     return false;
   };
 
@@ -28,26 +28,55 @@ export class Validation {
     return false;
   };
 
-  checkLimit = (value, errorID, mess, max, min) => {
+  checkLimit = (value, errorId, mess, max, min) => {
     if (min <= value && value <= max) {
-      hideError(errorID);
+      hideError(errorId);
       return true;
     }
 
-    showError(errorID, mess);
+    showError(errorId, mess);
     return false;
   };
 
-  checkLength = (value, errorID, mess, max, min = 1) => {
+  checkLength = (value, errorId, mess, max, min = 1) => {
     if (
       min <= value.trim().replace(/\s/g, '').length &&
       value.trim().replace(/\s/g, '').length <= max
     ) {
-      hideError(errorID);
+      hideError(errorId);
       return true;
     }
 
-    showError(errorID, mess);
+    showError(errorId, mess);
     return false;
+  };
+
+  checkExist = (value, data, errorId, mess, obj) => {
+    let isExist = false;
+
+    data.forEach((element) => {
+      switch (obj) {
+        case 'id':
+          if (value === element.id) {
+            isExist = true;
+          }
+          break;
+        case 'email':
+          if (value === element.email) {
+            isExist = true;
+          }
+          break;
+        default:
+          break;
+      }
+    });
+
+    if (isExist) {
+      showError(errorId, mess);
+      return false;
+    }
+
+    hideError(errorId);
+    return true;
   };
 }

@@ -117,3 +117,8 @@ const resetFormValues = () => {
     hideField('.customer-type');
   }
 };
+
+const resetSelection = () => {
+  domId('selcSort').value = 'default';
+  domId('selcFilter').value = 'default';
+};

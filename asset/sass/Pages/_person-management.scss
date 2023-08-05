@@ -98,9 +98,18 @@
     margin: auto;
   }
 }
-#confirmation {
-  .modal-content {
-    border-radius: 1.5rem;
+
+#detailModal {
+  .input-field {
+    padding-bottom: 10px;
+  }
+  label {
+    margin: 0;
+  }
+  .detail-span {
+    font-weight: bold;
+    color: #2953e8;
+    display: inline-block;
   }
 }
 

@@ -5,7 +5,10 @@ import { Validation } from '../models/validation.js';
 import { PersonService } from '../services/person-service.js';
 
 const personService = new PersonService();
+
 const valid = new Validation();
+
+const numberFormat = new Intl.NumberFormat('VN-vn');
 
 const getPerson = () => {
   const value = getValues();
@@ -109,7 +112,10 @@ const renderTable = (data = personService.list) => {
         <td>${address}</td>
         <td class="text-center">${type}</td>
         <td class="text-center">
-          <button type="button" class="btn btn-danger mb-1" onclick=""><i class="fa-solid fa-trash" onclick="deletePerson('${id}')"></i></button>
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#detailModal" onclick="showDetail('${id}')">Show detail</button>
+        </td>
+        <td class="text-center">
+          <button type="button" class="btn btn-danger mb-1"  onclick="deletePerson('${id}')"><i class="fa-solid fa-trash"></i></button>
           <button type="button" data-toggle="modal" data-target="#addingModal" class="btn btn-warning" onclick="modifyPerson('${id}')"><i class="fa-solid fa-wrench"></i></button>
         </td>
       </tr>
@@ -119,6 +125,138 @@ const renderTable = (data = personService.list) => {
   }, '');
 
   domId('tbdList').innerHTML = content;
+};
+
+const renderDetail = (obj) => {
+  const {
+    fullName,
+    address,
+    id,
+    email,
+    type,
+    mathGrade,
+    physicsGrade,
+    chemGrade,
+    workDay,
+    dailyWage,
+    companyName,
+    bill,
+    review,
+    averageGrade,
+    totalSalary,
+  } = obj;
+
+  let content = '';
+
+  content += `
+    <div class="container person-input-form">
+              <div class="input-field">
+                <label><i class="fa fa-id-card"></i>ID:</label>
+                <span class="detail-span">${id}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa fa-user"></i>Full Name:</label>
+                <span class="detail-span">${fullName}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa fa-envelope"></i>Email:</label>
+                <span class="detail-span">${email}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa fa-home"></i>Address:</label>
+                <span class="detail-span">${address}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa-solid fa-bars"></i>Type:</label>
+                <span class="detail-span">${type}</span>
+              </div>
+  `;
+
+  switch (type) {
+    case 'Student':
+      content += `
+              <div class="input-field">
+                <label><i class="fa fa-calculator"></i>Math Grade:</label>
+                <span class="detail-span">${mathGrade}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa fa-atom"></i>Physics Grade:</label>
+                <span class="detail-span">${physicsGrade}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa fa-flask"></i>Chemical Grade:</label>
+                <span class="detail-span">${chemGrade}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa-solid fa-marker"></i>Average Grade:</label>
+                <span class="detail-span">${averageGrade}</span>
+              </div>
+        `;
+      break;
+
+    case 'Employee':
+      content += `
+              <div class="input-field">
+                <label
+                  ><i class="fa-solid fa-business-time"></i>Work Day:</label
+                >
+                <span class="detail-span">${workDay}</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa-solid fa-coins"></i>Daily Wage:</label>
+                <span class="detail-span">${numberFormat.format(
+                  dailyWage
+                )} VND</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa-solid fa-sack-dollar"></i>Total Salary:</label>
+                <span class="detail-span">${numberFormat.format(
+                  totalSalary
+                )} VND</span>
+              </div>
+        `;
+      break;
+
+    case 'Customer':
+      content += `
+              <div class="input-field">
+                <label
+                  ><i class="fa-solid fa-building"></i>Company's Name:</label
+                >
+                <span class="detail-span">${companyName}</span>
+              </div>
+
+              <div class="input-field">
+                <label
+                  ><i class="fa-solid fa-money-check-dollar"></i>Bill:</label
+                >
+                <span class="detail-span">${numberFormat.format(
+                  bill
+                )} VND</span>
+              </div>
+
+              <div class="input-field">
+                <label><i class="fa-solid fa-comment"></i>Review:</label>
+                <span class="detail-span">${review}</span>
+              </div>
+            </div>
+        `;
+      break;
+
+    default:
+      break;
+  }
+
+  return content;
 };
 
 const addStudent = (
@@ -142,6 +280,8 @@ const addStudent = (
     chemGrade
   );
 
+  person.getAverGrade();
+
   return person;
 };
 
@@ -163,6 +303,8 @@ const addEmployee = (
     workDay,
     dailyWage
   );
+
+  person.getTotalSalary();
 
   return person;
 };
@@ -191,49 +333,6 @@ const addCustomer = (
   return person;
 };
 
-//=====================================================
-
-domId('btnAdd').onclick = () => {
-  document.querySelector(
-    '.modal-footer-btn'
-  ).innerHTML = `<button class="btn btn-info" type="button" onclick="addPerson()">Add</button>`;
-
-  resetFormValues();
-};
-
-window.addPerson = () => {
-  const person = getPerson();
-  if (person) {
-    const {
-      fullName,
-      address,
-      id,
-      email,
-      type,
-      mathGrade,
-      physicsGrade,
-      chemGrade,
-      workDay,
-      dailyWage,
-      companyName,
-      bill,
-      review,
-    } = person;
-
-    personService.addPerson(person);
-
-    saveData();
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Added!',
-      text: `${fullName} has been added successfully!`,
-    });
-
-    document.querySelectorAll('.modal-footer button')[1].click();
-  }
-};
-
 const setLocalStorage = () => {
   const stringify = JSON.stringify(personService.list);
 
@@ -253,13 +352,54 @@ const saveData = () => {
   renderTable();
 };
 
+window.onload = () => {
+  getLocalStorage();
+  renderTable();
+};
+
+//=====================================================
+
+/**
+ * Add Person
+ */
+domId('btnAdd').onclick = () => {
+  document.querySelector(
+    '.modal-footer-btn'
+  ).innerHTML = `<button class="btn btn-info" type="button" onclick="addPerson()">Add</button>`;
+
+  domId('userId').disabled = false;
+  domId('userId').style.fontWeight = 'normal';
+  domId('userId').style.borderBottom = 'solid 3px rgba(41, 82, 232, 0.301)';
+
+  resetFormValues();
+};
+
+window.addPerson = () => {
+  const person = getPerson();
+  if (person) {
+    personService.addPerson(person);
+
+    saveData();
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Added!',
+      text: `${person.fullName} has been added successfully!`,
+    });
+
+    resetSelection();
+
+    document.querySelectorAll('.modal-footer button')[1].click();
+  }
+};
+
 /**
  * Delete Person
  */
 window.deletePerson = (id) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
-      confirmButton: 'btn btn-primary',
+      confirmButton: 'btn btn-primary mr-2',
       cancelButton: 'btn btn-danger',
     },
     buttonsStyling: false,
@@ -286,6 +426,8 @@ window.deletePerson = (id) => {
         personService.delPerson(id);
 
         saveData();
+
+        resetSelection();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire(
           'Cancelled',
@@ -405,6 +547,8 @@ window.updatePerson = () => {
 
         Swal.fire('Saved!', ``, 'success');
 
+        resetSelection();
+
         document.querySelectorAll('.modal-footer button')[1].click();
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
@@ -413,6 +557,23 @@ window.updatePerson = () => {
   }
 };
 
+/**
+ * Show detail
+ */
+window.showDetail = (userId) => {
+  document.querySelector(
+    '#detailModal .modal-title'
+  ).innerHTML = `Detail Information`;
+
+  const person = personService.findById(userId);
+
+  document.querySelector('#detailModal .modal-body').innerHTML =
+    renderDetail(person);
+};
+
+/**
+ * Filter by type
+ */
 domId('selcFilter').onchange = () => {
   const type = domId('selcFilter').value;
 
@@ -421,39 +582,30 @@ domId('selcFilter').onchange = () => {
   renderTable(data);
 };
 
+/**
+ * Sort by name
+ */
+
 domId('selcSort').onchange = () => {
   const type = domId('selcSort').value;
+
   let newArr = [...personService.list];
+
+  const { sortNameFromAToZ, sortNameFromZtoA } = personService;
 
   switch (type) {
     case 'a-z':
-      newArr.sort((a, b) => {
-        if (a.fullName.toLowerCase() < b.fullName.toLowerCase()) {
-          return -1;
-        }
-        if (a.fullName.toLowerCase() > b.fullName.toLowerCase()) {
-          return 1;
-        }
-        return 0;
-      });
+      newArr.sort(sortNameFromAToZ);
 
       renderTable(newArr);
       break;
-    case 'z-a':
-      newArr.sort((a, b) => {
-        if (a.fullName > b.fullName) {
-          return -1;
-        }
-        if (a.fullName < b.fullName) {
-          return 1;
-        }
-        return 0;
-      });
 
-      console.log(newArr);
-      console.log(personService.list);
+    case 'z-a':
+      newArr.sort(sortNameFromZtoA);
 
       renderTable(newArr);
+      break;
+
     default:
       renderTable();
       break;
@@ -668,7 +820,27 @@ const checkValid = () => {
         );
 
       // Bill
-      isValid &= checkEmpty(bill, 'errorBill');
+      isValid &=
+        checkEmpty(bill, 'errorBill') &&
+        checkPattern(
+          bill,
+          /^[+]?\d+([.]\d+)?$/,
+          'errorBill',
+          `(*) Bill must be positive number`
+        ) &&
+        checkPattern(
+          bill,
+          /^([+-]?[1-9]\d*|0)$/,
+          'errorBill',
+          `(*) Bill must be integer`
+        ) &&
+        checkLimit(
+          bill,
+          'errorBill',
+          `(*) Bill must be between 500,000 - 10,000,000VND`,
+          10e6,
+          500000
+        );
 
       // Review
       isValid &=
@@ -709,9 +881,4 @@ const checkValidWhenType = () => {
   domId('companyName').addEventListener('keyup', checkValid);
   domId('bill').addEventListener('keyup', checkValid);
   domId('review').addEventListener('keyup', checkValid);
-};
-
-window.onload = () => {
-  getLocalStorage();
-  renderTable();
 };

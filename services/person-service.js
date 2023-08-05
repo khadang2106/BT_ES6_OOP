@@ -39,15 +39,35 @@ export class PersonService {
     return data;
   }
 
-  // sortByName() {
-  //   this.list.sort((a, b) => {
-  //     if (a.fullName < b.fullName) {
-  //       return -1;
-  //     }
-  //     if (a.fullName > b.fullName) {
-  //       return 1;
-  //     }
-  //     return 0;
-  //   });
-  // }
+  getFirstName = (fullName) => {
+    const splitName = fullName.split(' ');
+
+    return splitName[splitName.length - 1];
+  };
+
+  sortNameFromAToZ = (a, b) => {
+    const nameA = this.getFirstName(a.fullName.toLowerCase());
+    const nameB = this.getFirstName(b.fullName.toLowerCase());
+
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  };
+
+  sortNameFromZtoA = (a, b) => {
+    const nameA = this.getFirstName(a.fullName.toLowerCase());
+    const nameB = this.getFirstName(b.fullName.toLowerCase());
+
+    if (nameA > nameB) {
+      return -1;
+    }
+    if (nameA < nameB) {
+      return 1;
+    }
+    return 0;
+  };
 }

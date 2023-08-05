@@ -277,8 +277,16 @@ p {
   margin: auto;
 }
 
-#confirmation .modal-content {
-  border-radius: 1.5rem;
+#detailModal .input-field, #detailModal .person-input-form .select-field, .person-input-form #detailModal .select-field {
+  padding-bottom: 10px;
+}
+#detailModal label {
+  margin: 0;
+}
+#detailModal .detail-span {
+  font-weight: bold;
+  color: #2953e8;
+  display: inline-block;
 }
 
 @media screen and (max-width: 992px) {
