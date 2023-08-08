@@ -10,7 +10,7 @@ const valid = new Validation();
 
 const numberFormat = new Intl.NumberFormat('VN-vn');
 
-const getPerson = () => {
+const getPerson = (isAdd) => {
   const value = getValues();
   const {
     fullName,
@@ -28,8 +28,7 @@ const getPerson = () => {
     review,
   } = value;
 
-  checkValidWhenType();
-  if (checkValid()) {
+  if (checkValid(isAdd)) {
     switch (type) {
       case 'Student':
         return addStudent(
@@ -363,6 +362,10 @@ window.onload = () => {
  * Add Person
  */
 domId('btnAdd').onclick = () => {
+  removeListener(checkUpdateValid);
+  checkValidWhenType(checkAddValid);
+
+  document.querySelector('.modal-title').innerHTML = 'Person Management';
   document.querySelector(
     '.modal-footer-btn'
   ).innerHTML = `<button class="btn btn-info" type="button" onclick="addPerson()">Add</button>`;
@@ -371,11 +374,12 @@ domId('btnAdd').onclick = () => {
   domId('userId').style.fontWeight = 'normal';
   domId('userId').style.borderBottom = 'solid 3px rgba(41, 82, 232, 0.301)';
 
+  resetError();
   resetFormValues();
 };
 
 window.addPerson = () => {
-  const person = getPerson();
+  const person = getPerson(true);
   if (person) {
     personService.addPerson(person);
 
@@ -443,6 +447,9 @@ window.deletePerson = (id) => {
  */
 // Open Modify Form
 window.modifyPerson = (userId) => {
+  removeListener(checkAddValid);
+  checkValidWhenType(checkUpdateValid);
+
   document.querySelector('.modal-title').innerHTML = 'Modify Information';
   document.querySelector(
     '.modal-footer-btn'
@@ -530,7 +537,7 @@ window.modifyPerson = (userId) => {
 };
 //Update Info
 window.updatePerson = () => {
-  const person = getPerson();
+  const person = getPerson(false);
 
   if (person) {
     Swal.fire({
@@ -615,7 +622,7 @@ domId('selcSort').onchange = () => {
 /**
  * Validation Field Function
  */
-const checkValid = () => {
+const checkValid = (isAdd) => {
   const values = getValues();
   const {
     fullName,
@@ -633,21 +640,36 @@ const checkValid = () => {
     review,
   } = values;
 
-  const { checkEmpty, checkSelc, checkPattern, checkLimit, checkLength } =
-    valid;
+  const {
+    checkEmpty,
+    checkSelc,
+    checkPattern,
+    checkLimit,
+    checkLength,
+    checkExist,
+  } = valid;
 
   let isValid = true;
 
   // ID
-  isValid &=
-    checkEmpty(id, 'errorPersonId') &&
-    checkPattern(id, /^[a-zA-Z0-9]*$/, 'errorPersonId', `(*) Invalid ID`) &&
-    checkPattern(
-      id,
-      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
-      'errorPersonId',
-      `(*) ID must have at least 1 number and 1 character`
-    );
+  if (isAdd) {
+    isValid &=
+      checkEmpty(id, 'errorPersonId') &&
+      checkPattern(id, /^[a-zA-Z0-9]*$/, 'errorPersonId', `(*) Invalid ID`) &&
+      checkPattern(
+        id,
+        /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+        'errorPersonId',
+        `(*) ID must have at least 1 number and 1 character`
+      ) &&
+      checkExist(
+        id,
+        personService.list,
+        'errorPersonId',
+        `(*) ID already exists`,
+        'id'
+      );
+  }
 
   // Full Name
   isValid &=
@@ -867,7 +889,23 @@ const checkValid = () => {
   return isValid;
 };
 
-const checkValidWhenType = () => {
+const removeListener = (checkValid) => {
+  domId('userFullName').removeEventListener('keyup', checkValid);
+  domId('userAddress').removeEventListener('keyup', checkValid);
+  domId('userId').removeEventListener('keyup', checkValid);
+  domId('userEmail').removeEventListener('keyup', checkValid);
+  domId('selcType').removeEventListener('change', checkValid);
+  domId('mathGrade').removeEventListener('keyup', checkValid);
+  domId('physicsGrade').removeEventListener('keyup', checkValid);
+  domId('chemGrade').removeEventListener('keyup', checkValid);
+  domId('workDay').removeEventListener('keyup', checkValid);
+  domId('dailyWage').removeEventListener('keyup', checkValid);
+  domId('companyName').removeEventListener('keyup', checkValid);
+  domId('bill').removeEventListener('keyup', checkValid);
+  domId('review').removeEventListener('keyup', checkValid);
+};
+
+const checkValidWhenType = (checkValid) => {
   domId('userFullName').addEventListener('keyup', checkValid);
   domId('userAddress').addEventListener('keyup', checkValid);
   domId('userId').addEventListener('keyup', checkValid);
@@ -881,4 +919,12 @@ const checkValidWhenType = () => {
   domId('companyName').addEventListener('keyup', checkValid);
   domId('bill').addEventListener('keyup', checkValid);
   domId('review').addEventListener('keyup', checkValid);
+};
+
+const checkAddValid = () => {
+  checkValid(true);
+};
+
+const checkUpdateValid = () => {
+  checkValid(false);
 };
